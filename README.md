@@ -22,23 +22,23 @@ A multi-bot Discord management system built with **discord.js v14**. This projec
 
 ## 📑 Table of Contents
 
-- [Overview](#overview)
-- [Architecture](#architecture)
-- [Standard Bots](#standard-bots-10-bots)
-- [Kintaro Bot — The Main Bot](#kintaro-bot--the-main-bot)
-  - [Slash Commands](#slash-commands)
-  - [Event-Driven Features](#event-driven-features)
-  - [Access Control & Security](#access-control--security)
-- [Environment Variables](#environment-variables)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-  - [Configuration](#configuration)
-  - [Deploying Commands](#deploying-commands)
-  - [Running the Bots](#running-the-bots)
-- [Project Scripts](#project-scripts)
-- [Tech Stack](#tech-stack)
-- [Project Structure](#project-structure)
+- <a href="#overview">Overview</a>
+- <a href="#architecture">Architecture</a>
+- <a href="#standard-bots-10-bots">Standard Bots</a>
+- <a href="#kintaro-bot--the-main-bot">Kintaro Bot — The Main Bot</a>
+  - <a href="#slash-commands">Slash Commands</a>
+  - <a href="#event-driven-features">Event-Driven Features</a>
+  - <a href="#access-control--security">Access Control & Security</a>
+- <a href="#environment-variables">Environment Variables</a>
+- <a href="#getting-started">Getting Started</a>
+  - <a href="#prerequisites">Prerequisites</a>
+  - <a href="#installation">Installation</a>
+  - <a href="#configuration">Configuration</a>
+  - <a href="#deploying-commands">Deploying Commands</a>
+  - <a href="#running-the-bots">Running the Bots</a>
+- <a href="#project-scripts">Project Scripts</a>
+- <a href="#tech-stack">Tech Stack</a>
+- <a href="#project-structure">Project Structure</a>
 
 ---
 
