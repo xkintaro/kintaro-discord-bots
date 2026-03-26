@@ -42,7 +42,7 @@ A multi-bot Discord management system built with **discord.js v14**. This projec
 
 ---
 
-## 🌐 Overview
+## 🌐 Overview <a id="overview"></a>
 
 **Kintaro Discord Bots** is a monorepo-style project designed to run multiple Discord bots simultaneously from a single machine. It contains **10 standard companion bots** that share the same lightweight architecture, and **1 advanced main bot (Kintaro)** packed with moderation tools, server management features, fun commands, and automated event handlers.
 
