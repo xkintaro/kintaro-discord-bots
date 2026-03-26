@@ -59,7 +59,7 @@ All bots are built using **discord.js v14**, follow a modular command/event hand
 
 ---
 
-## 🏗️ Architecture
+## 🏗️ Architecture <a id="architecture"></a>
 
 The project follows a flat monorepo structure where each bot lives in its own subfolder under `all/`. A set of root-level management scripts orchestrate operations across all bots simultaneously.
 
@@ -104,7 +104,7 @@ bot-name/
 
 ---
 
-## 🤝 Standard Bots (10 Bots)
+## 🤝 Standard Bots (10 Bots) <a id="standard-bots-10-bots"></a>
 
 The following **10 bots** share an identical, lightweight architecture. They are designed to act as presence/companion bots with minimal features:
 
@@ -148,11 +148,11 @@ Each standard bot includes the following capabilities:
 
 ---
 
-## ⭐ Kintaro Bot — The Main Bot
+## ⭐ Kintaro Bot — The Main Bot <a id="kintaro-bot--the-main-bot"></a>
 
 **Kintaro** is the flagship bot of this project. It extends the standard bot template with a comprehensive suite of **12 slash commands** and **5 event-driven features**, making it a full-featured Discord server management and entertainment bot.
 
-### 🎮 Slash Commands
+### 🎮 Slash Commands <a id="slash-commands"></a>
 
 #### `/ping`
 > **Permission:** Everyone
@@ -352,7 +352,7 @@ A fun command that generates a compatibility percentage between the command auth
 
 ---
 
-### 🎯 Event-Driven Features
+### 🎯 Event-Driven Features <a id="event-driven-features"></a>
 
 Kintaro includes several powerful event-driven systems that can be individually toggled via environment variables.
 
@@ -418,7 +418,7 @@ Automatically responds to specific messages with predefined replies. Acts as a f
 
 ---
 
-### 🔒 Access Control & Security
+### 🔒 Access Control & Security <a id="access-control--security"></a>
 
 Kintaro has a built-in security system with two tiers:
 
@@ -430,7 +430,7 @@ Kintaro has a built-in security system with two tiers:
 
 ---
 
-## 🔑 Environment Variables
+## 🔑 Environment Variables <a id="environment-variables"></a>
 
 ### Kintaro Bot Full Configuration
 
@@ -465,9 +465,9 @@ KINTARO_AUTO_RESPONSER=true                 # Enable automatic message responses
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Getting Started <a id="getting-started"></a>
 
-### Prerequisites
+### Prerequisites <a id="prerequisites"></a>
 
 - **Node.js** v18 or higher
 - **npm** (included with Node.js)
@@ -481,7 +481,7 @@ KINTARO_AUTO_RESPONSER=true                 # Enable automatic message responses
   - `Read Message History`
   - `Use Slash Commands`
 
-### Installation
+### Installation <a id="installation"></a>
 
 1. **Clone the repository:**
 
@@ -502,7 +502,7 @@ install-requirements.bat
 
 This will run `npm install` in every bot folder under `all/`.
 
-### Configuration
+### Configuration <a id="configuration"></a>
 
 1. Navigate to each bot's folder under `all/`
 2. Edit the `.env` file and fill in your bot's credentials:
@@ -515,7 +515,7 @@ GUILD_ID=your_server_id_here
 
 3. For the **Kintaro** bot, additionally configure the feature-specific variables (channels, roles, etc.)
 
-### Deploying Commands
+### Deploying Commands <a id="deploying-commands"></a>
 
 Before using slash commands, you need to register them with Discord:
 
@@ -529,7 +529,7 @@ deploy.bat
 
 This runs `node deploy.js` inside each bot folder, registering all slash commands as **guild-specific commands** for faster propagation.
 
-### Running the Bots
+### Running the Bots <a id="running-the-bots"></a>
 
 ```bash
 # Start all bots simultaneously
@@ -543,7 +543,7 @@ Each bot runs as a separate child process. Console output is prefixed with the b
 
 ---
 
-## 📜 Project Scripts
+## 📜 Project Scripts <a id="project-scripts"></a>
 
 | Script | Command | Description |
 |--------|---------|-------------|
@@ -558,7 +558,7 @@ Each script also has a `.bat` equivalent for easy execution on Windows via doubl
 
 ---
 
-## 🛠️ Tech Stack
+## 🛠️ Tech Stack <a id="tech-stack"></a>
 
 | Technology | Purpose |
 |------------|---------|
@@ -572,7 +572,7 @@ Each script also has a `.bat` equivalent for easy execution on Windows via doubl
 
 ---
 
-## 📂 Project Structure
+## 📂 Project Structure <a id="project-structure"></a>
 
 ```
 kintaro-discord-bots/
