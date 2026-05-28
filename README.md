@@ -1,576 +1,495 @@
+<a href="README.md">
+  <img src="https://img.shields.io/badge/Language-English-blue?style=flat-square&logo=google-translate&logoColor=white" alt="English">
+</a>
+<a href="README-TR.md">
+  <img src="https://img.shields.io/badge/Dil-Türkçe-red?style=flat-square&logo=google-translate&logoColor=white" alt="Türkçe">
+</a>
+
+  <br />
+  <br />
+
 <div align="center">
   <img src="md/logo.png" width="120" height="120" />
   <br />
   <br />
 
-  <img src="https://img.shields.io/badge/discord.js-v14-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="discord.js v14">
-  <img src="https://img.shields.io/badge/Node.js-18+-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js 18+">
+  <p>
+    Powerful Discord management bots featuring premium security and interactive tools.
+  </p>
 
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)
+![Discord.js](https://img.shields.io/badge/discord.js-5865F2?style=for-the-badge&logo=discord&logoColor=white)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)
+
+  <p>
+    <a href="#architectural">Architecture</a> •
+    <a href="#security">Security</a> •
+    <a href="#standart-bots">Standard Bots</a> •
+    <a href="#main-bot">Main Bot</a> •
+    <a href="#environment-variables">Configuration</a> •
+    <a href="#installation">Installation</a> •
+    <a href="#license">License</a>
+  </p>
+
+  <br />
   <br />
 </div>
 
----
+## 📋 About
 
+**Kintaro Discord Bots** is a project built in a monorepo structure designed to run multiple Discord bots simultaneously on a single machine. The project contains a total of **11 Discord bots** developed using **discord.js v14**.
 
-<p align="center">
+Among these bots, the main, advanced, and comprehensive one is the **Kintaro** bot. It has many features such as moderation systems, server management tools, fun commands, and automatic event handlers.
 
-</p>
+The other **10 standard bots** are simple bots generally developed to stay AFK in specific servers and voice channels. You can add or delete new bots as you wish.
 
-# 🤖 Kintaro Discord Bots
+All bots follow a modular command/event handler structure, and each is configured with independent `.env` files.
 
-A multi-bot Discord management system built with **discord.js v14**. This project hosts **11 independent Discord bots** with a shared codebase architecture, centralized management scripts, and a powerful feature-rich main bot called **Kintaro**.
+**Note**: In this document, bots other than the Kintaro bot will be referred to as "_Standard Bots_".
 
-## 📑 Table of Contents
+## ❓ What You Need to Know <a id="what-you-need-to-know"></a>
 
-- <a href="#overview">Overview</a>
-- <a href="#architecture">Architecture</a>
-- <a href="#standard-bots-10-bots">Standard Bots</a>
-- <a href="#kintaro-bot--the-main-bot">Kintaro Bot — The Main Bot</a>
-  - <a href="#slash-commands">Slash Commands</a>
-  - <a href="#event-driven-features">Event-Driven Features</a>
-  - <a href="#access-control--security">Access Control & Security</a>
-- <a href="#environment-variables">Environment Variables</a>
-- <a href="#getting-started">Getting Started</a>
-  - <a href="#prerequisites">Prerequisites</a>
-  - <a href="#installation">Installation</a>
-  - <a href="#configuration">Configuration</a>
-  - <a href="#deploying-commands">Deploying Commands</a>
-  - <a href="#running-the-bots">Running the Bots</a>
-- <a href="#project-scripts">Project Scripts</a>
-- <a href="#tech-stack">Tech Stack</a>
-- <a href="#project-structure">Project Structure</a>
+- There is a `.env` file in the root directory of each bot. This file must be configured correctly (bot token, guild ID, etc.).
+- The `install-requirements.js` file in the root directory of the project allows installing all dependencies for all bots at once.
+- The `deploy.js` file in the root directory of the project deploys all slash commands for all bots at once.
+- The `clear.js` file in the root directory of the project clears all slash commands for all bots at once.
+- The `run.js` file in the root directory of the project starts all bots simultaneously as child processes.
 
----
+For detailed control, each bot's individual `deploy.js` and `clear.js` files can also be run one by one.
 
-## 🌐 Overview <a id="overview"></a>
+## 🏗️ Architecture <a id="architectural"></a>
 
-**Kintaro Discord Bots** is a monorepo-style project designed to run multiple Discord bots simultaneously from a single machine. It contains **10 standard companion bots** that share the same lightweight architecture, and **1 advanced main bot (Kintaro)** packed with moderation tools, server management features, fun commands, and automated event handlers.
-
-All bots are built using **discord.js v14**, follow a modular command/event handler pattern, and are configured via individual `.env` files for maximum flexibility.
-
-### Key Highlights
-
-- 🏗️ **Modular Architecture** — Commands and events are loaded dynamically from dedicated folders
-- 🔧 **Centralized Management** — Install dependencies, deploy commands, run, and clear all bots with a single script
-- 🛡️ **Server Guard System** — Welcome/farewell messages with invite tracking and admin-based member verification
-- 🎭 **Role Picker** — Interactive button-based role assignment with single-role and multi-role modes
-- 🔒 **Access Control** — Per-bot public/private mode with automatic unauthorized server removal
-- 🎙️ **Voice Channel Integration** — Manual and automatic voice channel joining capabilities
-
----
-
-## 🏗️ Architecture <a id="architecture"></a>
-
-The project follows a flat monorepo structure where each bot lives in its own subfolder under `all/`. A set of root-level management scripts orchestrate operations across all bots simultaneously.
+Each bot follows a flat monorepo structure, living in its own folder inside the `all/` directory.
 
 ```
 kintaro-discord-bots/
-├── all/                        # All bot instances
+├── all/
 │   ├── atakan/                 # Standard bot
 │   ├── caylak/                 # Standard bot
 │   ├── durden/                 # Standard bot
 │   ├── flawes/                 # Standard bot
-│   ├── kintaro/                # ⭐ Main bot (feature-rich)
+│   ├── kintaro/                # ⭐ Main bot
 │   ├── leywin/                 # Standard bot
 │   ├── luxury/                 # Standard bot
 │   ├── micsfo/                 # Standard bot
 │   ├── mistazt/                # Standard bot
 │   ├── starx/                  # Standard bot
 │   └── truvaq/                 # Standard bot
-├── run.js                      # Start all bots
-├── run.bat                     # Windows shortcut — start all bots
-├── deploy.js                   # Deploy slash commands for all bots
-├── deploy.bat                  # Windows shortcut — deploy commands
-├── install-requirements.js     # Install npm packages for all bots
-├── install-requirements.bat    # Windows shortcut — install deps
-├── clear.js                    # Clear slash commands for all bots
-└── clear.bat                   # Windows shortcut — clear commands
+├── run.js                      # Starts all bots
+├── run.bat                     
+├── deploy.js                   # Deploys slash commands for all bots
+├── deploy.bat                  
+├── install-requirements.js     # Installs npm packages for all bots
+├── install-requirements.bat    
+├── clear.js                    # Clears slash commands for all bots
+└── clear.bat                   
 ```
 
-Each individual bot folder contains:
+Each bot folder contains:
 
 ```
 bot-name/
-├── .env                # Bot token, guild ID, and feature flags
+├── .env                # Bot token, server ID, and feature configurations
 ├── index.js            # Main entry point
-├── deploy.js           # Slash command deployment script
-├── clear.js            # Slash command removal script
+├── deploy.js           # Slash command deployment
+├── clear.js            # Slash command clearing
 ├── package.json        # Dependencies
-├── commands/           # Slash command modules
+├── commands/
 │   └── *.js
-└── events/             # Event handler modules
+└── events/
     └── *.js
 ```
 
----
+## 🔒 Access Control and Security <a id="security"></a>
 
-## 🤝 Standard Bots (10 Bots) <a id="standard-bots-10-bots"></a>
+All bots have a built-in two-layer security system. Preferences are managed from each bot's own `.env` file.
 
-The following **10 bots** share an identical, lightweight architecture. They are designed to act as presence/companion bots with minimal features:
+- `KINTARO_BOT_PUBLIC=true`: The bot can be added to any server. It sends a greeting message when joining a new server.
+- `KINTARO_BOT_PUBLIC=false`: The bot only works on the authorized server (`GUILD_ID`). When added to another server, it sends a warning and leaves automatically.
+- `KINTARO_BOT_QUIT_UNVERIFIED_ALL_SERVERS=true`: At startup, the bot checks all servers it is currently in and leaves those that do not match the authorized `GUILD_ID`.
 
-| # | Bot Name    | Description |
-|---|-------------|-------------|
-| 1 | **atakan**  | Standard companion bot |
-| 2 | **caylak**  | Standard companion bot |
-| 3 | **durden**  | Standard companion bot |
-| 4 | **flawes**  | Standard companion bot |
-| 5 | **leywin**  | Standard companion bot |
-| 6 | **luxury**  | Standard companion bot |
-| 7 | **micsfo**  | Standard companion bot |
-| 8 | **mistazt** | Standard companion bot |
-| 9 | **starx**   | Standard companion bot |
-| 10 | **truvaq** | Standard companion bot |
+## 🔷 Standard Bots <a id="standart-bots"></a>
+
+The following **10 bots** share the same lightweight architecture.
+
+`atakan`, `caylak`, `durden`, `flawes`, `leywin`, `luxury`, `micsfo`, `mistazt`, `starx`, `truvaq`
 
 ### Standard Bot Features
 
 Each standard bot includes the following capabilities:
 
-- **`/ping` Command** — A simple health-check that replies with "Pong!"
-- **Auto Voice Join** — Automatically joins a specified voice channel at configurable intervals (togglable via `KINTARO_JUMP_VOICE_AUTO`)
-- **Public/Private Mode** — Can be configured to either accept all servers or restrict to a single authorized server
-- **Unauthorized Server Protection** — If `KINTARO_BOT_PUBLIC` is `false`, the bot will send a notice and automatically leave any unauthorized servers
-- **Startup Cleanup** — On startup, if `KINTARO_BOT_QUIT_UNVERIFIED_ALL_SERVERS` is enabled, the bot leaves all servers except the authorized one
-- **Member Caching** — Automatically fetches and caches all members on startup for authorized servers
-- **Dynamic Event Loading** — Events are loaded from the `events/` folder based on feature flags
+- **`/ping` Command**: A simple health-check that responds with "Pong!".
+- **Auto Voice Join**: Automatically joins a specified voice channel at configurable intervals (can be toggled on/off with `KINTARO_JUMP_VOICE_AUTO`).
+- **Public/Private Mode**: Can be configured to accept all servers or be restricted to a single authorized server.
+- **Unauthorized Server Protection**: If the `KINTARO_BOT_PUBLIC` variable is `false`, the bot sends a warning and automatically leaves when joining an unauthorized server.
+- **Startup Cleanup**: If `KINTARO_BOT_QUIT_UNVERIFIED_ALL_SERVERS` is enabled at startup, the bot leaves all servers except the authorized one.
+- **Member Caching**: Automatically fetches and caches all members at startup for authorized servers.
+- **Dynamic Event Loading**: Events are loaded from the `events/` folder based on feature flags.
 
 ### Standard Bot Environment Variables
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `DISCORD_TOKEN` | Bot authentication token | — |
-| `CLIENT_ID` | Bot application client ID | — |
-| `GUILD_ID` | Authorized guild (server) ID | — |
-| `KINTARO_BOT_PUBLIC` | Allow bot on any server | `false` |
-| `KINTARO_BOT_QUIT_UNVERIFIED_ALL_SERVERS` | Leave unauthorized servers on startup | `true` |
-| `KINTARO_JUMP_VOICE_AUTO` | Enable auto voice channel join | `true` |
-| `KINTARO_JUMP_VOICE_AUTO_JOIN_INTERVAL` | Join check interval in seconds | `300` |
-| `KINTARO_JUMP_VOICE_AUTO_CHANNEL_ID` | Target voice channel ID | — |
+| Variable                                  | Description                                      | Default    |
+| ----------------------------------------- | ------------------------------------------------ | ---------- |
+| `DISCORD_TOKEN`                           | Bot authentication token                         | —          |
+| `CLIENT_ID`                               | Bot application client ID                        | —          |
+| `GUILD_ID`                                | Authorized server (guild) ID                     | —          |
+| `KINTARO_BOT_PUBLIC`                      | Allow the bot to join any server                 | `false`    |
+| `KINTARO_BOT_QUIT_UNVERIFIED_ALL_SERVERS` | Leave unauthorized servers at startup            | `true`     |
+| `KINTARO_JUMP_VOICE_AUTO`                 | Enable automatic voice channel join              | `true`     |
+| `KINTARO_JUMP_VOICE_AUTO_JOIN_INTERVAL`   | Join check interval (in seconds)                 | `300`      |
+| `KINTARO_JUMP_VOICE_AUTO_CHANNEL_ID`      | Target voice channel ID                          | —          |
 
----
+## ⭐ Main Bot (Kintaro) <a id="main-bot"></a>
 
-## ⭐ Kintaro Bot — The Main Bot <a id="kintaro-bot--the-main-bot"></a>
+**Kintaro** is the main advanced bot of this project. It extends the standard bot template with a comprehensive package, making it a full-featured Discord server management and entertainment bot.
 
-**Kintaro** is the flagship bot of this project. It extends the standard bot template with a comprehensive suite of **12 slash commands** and **5 event-driven features**, making it a full-featured Discord server management and entertainment bot.
-
-### 🎮 Slash Commands <a id="slash-commands"></a>
+### 🎮 Commands
 
 #### `/ping`
+
 > **Permission:** Everyone
 
-A simple latency check command. Replies with "Pong!" to confirm the bot is online and responsive.
+A simple latency check command. Responds with "Pong!" to confirm that the bot is online and responsive.
 
----
+#
 
 #### `/avatar`
+
 > **Permission:** Everyone
 
-Displays a user's avatar in full resolution (1024×1024).
+Displays a user's profile picture in full resolution (1024×1024).
 
-| Option | Type | Required | Description |
-|--------|------|----------|-------------|
-| `user` | User | ✅ | The user whose avatar you want to view |
+| Option  | Type      | Required |
+| ------- | --------- | -------- |
+| `user`  | User      | ✅       | 
 
 **Features:**
-- Supports animated avatars (GIFs)
-- Displays in a rich embed with a DodgerBlue color accent
-- Shows who requested the avatar in the footer
 
----
+- Supports GIF format
+- Displays inside a Discord Embed
+- Shows who requested the profile picture
+
+#
 
 #### `/banner`
+
 > **Permission:** Everyone
 
 Displays a user's profile banner in full resolution.
 
-| Option | Type | Required | Description |
-|--------|------|----------|-------------|
-| `user` | User | ✅ | The user whose banner you want to view |
+| Option  | Type      | Required |
+| ------- | --------- | -------- |
+| `user`  | User      | ✅       |
 
 **Features:**
-- Fetches the user profile with `force: true` to guarantee up-to-date data
-- Supports animated banners
-- Gracefully handles users who don't have a banner set
 
----
+- Fetches user profile with `force: true` to guarantee up-to-date data
+- Supports animated banners
+- Handles users without set banners smoothly
+
+#
 
 #### `/profile`
+
 > **Permission:** Everyone
 
-Shows a detailed profile card for a user with comprehensive server-specific information.
+Shows a detailed profile card for a user, including comprehensive server-specific information.
 
-| Option | Type | Required | Description |
-|--------|------|----------|-------------|
-| `user` | User | ❌ | Target user (defaults to the command author) |
+| Option  | Type      | Required |
+| ------- | --------- | -------- |
+| `user`  | User      | ❌       | 
 
 **Displayed Information:**
-- 👤 Username
-- 📅 Account creation date
-- 📅 Server join date
-- ⚙️ Account type (Bot / Trusted)
-- 🔵 Online/Offline status
-- 🚀 Nitro Boost status & date
-- 🔊 Current voice channel (if any)
-- 📜 All assigned roles (sorted alphabetically)
 
----
+- Username
+- Account creation date
+- Server join date
+- Account type
+- Online/Offline status
+- Nitro Boost status and date
+- Current voice channel
+- All assigned roles
+
+#
 
 #### `/serverstats`
+
 > **Permission:** Everyone
 
 Displays a comprehensive overview of the current server's statistics in a rich embed.
 
 **Displayed Information:**
-- 👑 Server owner
-- 📅 Server creation date
-- 👥 Total member count
-- 🤖 Bot count
-- 📚 Total channel count (excluding categories)
-- 📝 Text channel count
-- 🔊 Voice channel count
-- 🔖 Role count
-- 🔧 Admin count
-- 📜 Full list of all roles (sorted alphabetically)
-- 🔧 Full list of all admin users (sorted alphabetically)
 
----
+- Server owner
+- Server creation date
+- Total member count
+- Bot count
+- Total channel count
+- Text channel count
+- Voice channel count
+- Role count
+- Administrator count
+- Full list of all roles
+- Full list of all administrator users
+
+#
 
 #### `/botstats`
+
 > **Permission:** Everyone
 
-Shows information about the Kintaro bot itself.
+Displays information about the Kintaro bot itself.
 
 **Displayed Information:**
-- ⏳ Uptime (hours, minutes, seconds)
-- 👨‍💻 Bot creator
-- Bot bio/description
 
----
+- Uptime
+- Bot creator
+- Bot biography/description
+
+#
 
 #### `/clear`
+
 > **Permission:** Manage Messages
 
-Bulk-deletes a specified number of messages from the current channel.
+Bulk deletes a specified number of messages from the current channel.
 
-| Option | Type | Required | Description |
-|--------|------|----------|-------------|
-| `amount` | Integer | ✅ | Number of messages to delete (1–100) |
+| Option   | Type    | Required |
+| -------- | ------- | -------- |
+| `amount` | Integer | ✅       |
 
 **Features:**
-- Uses Discord's bulk delete API for efficient deletion
-- Automatically skips messages older than 14 days (Discord API limitation)
-- Permission check to ensure only authorized users can delete messages
 
----
+- Uses Discord's bulk delete API for efficient deletion
+- Performs authorization check to ensure only authorized users can delete messages
+
+#
 
 #### `/say`
+
 > **Permission:** Administrator
 
-Sends a custom message to a specified text channel as the bot.
+Sends a custom message to a specified text channel.
 
-| Option | Type | Required | Description |
-|--------|------|----------|-------------|
-| `kanal` | Channel | ✅ | Target text channel |
-| `mesaj` | String | ✅ | Message content to send |
+| Option    | Type    | Required | Description                     |
+| --------- | ------- | -------- | ------------------------------- |
+| `channel` | Channel | ✅       | Target text channel             |
+| `message` | Text    | ✅       | Message content to be sent      |
 
 **Features:**
+
 - Supports multi-line messages using `\n` escape sequences
-- Ephemeral confirmation reply (only visible to the command author)
 - Channel type validation to ensure only text channels are selected
 
----
+#
 
 #### `/copymessage`
+
 > **Permission:** Administrator
 
 Copies a message from one channel to another, preserving content and embeds.
 
-| Option | Type | Required | Description |
-|--------|------|----------|-------------|
-| `hedef_kanal` | Channel | ✅ | Destination channel |
-| `kaynak_kanal` | Channel | ✅ | Source channel |
-| `mesaj_id` | String | ✅ | Message ID to copy |
+| Option           | Type    | Required | Description                   |
+| ---------------- | ------- | -------- | ----------------------------- |
+| `target_channel` | Channel | ✅       | Target channel                |
+| `source_channel` | Channel | ✅       | Source channel                |
+| `message_id`     | Text    | ✅       | ID of the message to be copied|
 
 **Features:**
-- Preserves both text content and embedded content
-- Error handling for deleted or invalid message IDs
-- Ephemeral responses for all feedback
 
----
+- Preserves both text content and embed content
+
+#
 
 #### `/rolepicker`
+
 > **Permission:** Administrator
 
-Creates an interactive role picker message with buttons that users can click to assign/remove roles.
+Creates an interactive role picker message containing buttons that users can click to assign/remove roles.
 
-| Option | Type | Required | Description |
-|--------|------|----------|-------------|
-| `kanal` | Channel | ✅ | Channel to post the role picker |
-| `mod` | Choice | ✅ | `tek_rol` (single) or `coklu_rol` (multiple) |
-| `roller` | String | ✅ | Role mentions (e.g., `@Role1 @Role2 @Role3`) |
-| `mesaj` | String | ✅ | Description message above the buttons |
+| Option     | Type    | Required | Description                                       |
+| ---------- | ------- | -------- | ------------------------------------------------- |
+| `channel`  | Channel | ✅       | Channel where the role picker will be sent        |
+| `mode`     | Choice  | ✅       | `single_role` or `multi_role`                     |
+| `roles`    | Text    | ✅       | Role tags (e.g., `@Role1 @Role2 @Role3`)          |
+| `message`  | Text    | ✅       | Description message to be displayed above buttons |
 
 **Features:**
-- **Single-Role Mode (`tek_rol`)** — Only one role from the picker can be active at a time. Selecting a new role automatically removes the previous one
-- **Multi-Role Mode (`coklu_rol`)** — Users can toggle multiple roles on/off independently
-- Automatically creates role buttons arranged in rows (max 5 per row)
-- Includes a "Remove All Roles" danger button for quick reset
-- Button interactions have a 1-second cooldown to prevent spam
-- Multi-line support in the description message using `\n`
 
----
+- **Single Role Mode (`single_role`)** — Only one role from the picker can be active at a time. When a new role is selected, the previous one is automatically removed
+- **Multi Role Mode (`multi_role`)** — Users can toggle multiple roles independently
+- Automatically creates role buttons arranged in rows
+- Includes a red "Remove All Roles" button for a quick reset
+- Has a 1-second cooldown on button interactions to prevent spam
+- Offers multi-line support using `\n` in the description message
+
+#
 
 #### `/jumpvoice`
+
 > **Permission:** Administrator
 
-Makes the bot join the voice channel that the command author is currently in.
+Makes the bot join the voice channel where the user who executed the command is currently located.
 
 **Features:**
-- Uses `@discordjs/voice` for stable voice connections
-- Validates that the user is in a voice channel before attempting to join
 
----
+- Uses `@discordjs/voice` for stable voice connections
+- Verifies that the user is in a voice channel before attempting to join
+
+#
 
 #### `/ship`
+
 > **Permission:** Everyone
 
-A fun command that generates a compatibility percentage between the command author and a selected user, accompanied by a custom-generated image.
+A fun command that generates a compatibility percentage between the user who executed the command and a selected user, accompanied by a custom-generated image.
 
-| Option | Type | Required | Description |
-|--------|------|----------|-------------|
-| `user` | User | ✅ | The user to ship with |
+| Option  | Type      | Required | Description                         |
+| ------- | --------- | -------- | ----------------------------------- |
+| `user`  | User      | ✅       | The user to ship with               |
 
 **Features:**
+
 - Generates a random compatibility percentage (0–100%)
-- Creates a custom canvas image featuring:
-  - Blurred background image
-  - Both users' avatars rendered as circles with black borders
-  - A heart emoji (❤️) between the avatars
-  - The compatibility percentage displayed below the heart
+- Creates a beautiful canvas image with the users' avatars
 - Uses **Sharp** for image preprocessing and format conversion
-- Uses **Canvas** for dynamic image generation
-- Handles WebP avatar format conversion for compatibility
 
----
+#
 
-### 🎯 Event-Driven Features <a id="event-driven-features"></a>
-
-Kintaro includes several powerful event-driven systems that can be individually toggled via environment variables.
+### 🎯 Events <a id="events"></a>
 
 #### 1. Entry/Exit Messages (`kintaroEntryExit`)
-> **Toggle:** `KINTARO_ENTRY_EXIT=true`
 
-Simple welcome and farewell messages posted to a designated channel when members join or leave the server.
+> **Activation:** `KINTARO_ENTRY_EXIT=true`
 
-- **Join:** Posts a welcome message with the member's tag, mention, and current member count
-- **Leave:** Posts a farewell message with the member mention and updated member count
-- Requires `KINTARO_ENTRY_EXIT_WELCOME_CHANNEL` to be set
-
----
+Simple welcome and goodbye messages sent to a designated channel when members join or leave the server.
 
 #### 2. Guard System (`kintaroEntryExitGuard`)
-> **Toggle:** `KINTARO_ENTRY_EXIT_GUARD=true`
 
-An advanced member verification system that requires admin approval before new members gain full server access.
+> **Activation:** `KINTARO_ENTRY_EXIT_GUARD=true`
+
+An advanced member verification system that requires administrator approval before new members gain full access to the server.
 
 **How it works:**
-1. When a new member joins, they are automatically assigned an **Unverified** role
-2. A welcome message is posted in the guard channel with:
-   - The new member's tag and mention
+
+1. When a new member joins, they are automatically assigned an **Unverified** role.
+2. A welcome message is sent to the guard channel, containing the following information:
+   - The new member's name/tag and mention
    - Current server member count
-   - Invite tracking info (who invited them and which invite code was used)
-   - A **"Register"** button for admins
-3. An admin clicks the **Register** button to:
-   - Remove the **Unverified** role
-   - Assign the **Verified** role
-   - Update the welcome message to show who registered the member
-   - Disable the button (changes to "Registered" with green style)
-4. If the member leaves before being registered:
-   - The welcome message is updated with a notice
-   - The button is disabled and changes to "User Left the Server" with red style
-   - A farewell message with a GIF is sent
-
-**Invite Tracking:**
-- Primary method: Checks server invites to identify the inviter and invite code
-- Fallback: Checks audit logs for `MemberAdd` events
-- Last resort: Displays "joined via custom link or direct entry"
-
----
+   - Invite tracking information (who invited them and which invite code was used)
+   - A **"Register"** button for administrators
+3. An administrator clicks the **Register** button to approve the member's registration:
+   - Removes the **Unverified** role
+   - Assigns the **Verified** role
+   - Updates the welcome message to show who registered the member
+   - Disables the button (changes to green "Registered")
+4. If the member leaves the server before being registered:
+   - The welcome message is updated with a warning
+   - The button is disabled and changes to red "User Left the Server"
+   - A goodbye message with a GIF is sent
 
 #### 3. Auto Voice Join (`kintaroJumpVoiceAuto`)
-> **Toggle:** `KINTARO_JUMP_VOICE_AUTO=true`
 
-Automatically joins a specified voice channel at regular intervals to maintain presence.
+> **Activation:** `KINTARO_JUMP_VOICE_AUTO=true`
 
-- Checks if the bot is already in the target channel to avoid redundant joins
-- Configurable interval via `KINTARO_JUMP_VOICE_AUTO_JOIN_INTERVAL` (in seconds)
-- Uses `@discordjs/voice` with proper guild adapter configuration
+Automatically stays AFK in a specific voice channel on the server.
 
----
+- Checks if the bot is already in the target channel to prevent redundant joins
+- Configurable interval (in seconds) via `KINTARO_JUMP_VOICE_AUTO_JOIN_INTERVAL`
 
 #### 4. Auto Responder (`kintaroAutoResponder`)
-> **Toggle:** `KINTARO_AUTO_RESPONSER=true`
 
-Automatically responds to specific messages with predefined replies. Acts as a fun interaction system for community members.
+> **Activation:** `KINTARO_AUTO_RESPONSER=true`
+
+Automatically responds to specific messages with predefined answers. Acts as a fun interaction system for community members.
 
 - Responds to greetings and specific user mentions
-- Content-based matching with customizable responses
+- Performs content-based matching with customizable responses
 - Ignores messages from other bots
-
----
-
-### 🔒 Access Control & Security <a id="access-control--security"></a>
-
-Kintaro has a built-in security system with two tiers:
-
-| Feature | Description |
-|---------|-------------|
-| **Public Mode** (`KINTARO_BOT_PUBLIC=true`) | The bot can be added to any server. Sends a greeting message upon joining a new server. |
-| **Private Mode** (`KINTARO_BOT_PUBLIC=false`) | The bot only operates in the authorized server (`GUILD_ID`). If added to any other server, it sends a notice and automatically leaves. |
-| **Startup Cleanup** (`KINTARO_BOT_QUIT_UNVERIFIED_ALL_SERVERS=true`) | On startup, the bot checks all servers it's currently in and leaves any that don't match the authorized `GUILD_ID`. |
-
----
 
 ## 🔑 Environment Variables <a id="environment-variables"></a>
 
-### Kintaro Bot Full Configuration
-
 ```env
 # ─── Core Authentication ───
-DISCORD_TOKEN=                              # Bot token from Discord Developer Portal
-CLIENT_ID=                                  # Bot application's client ID
-GUILD_ID=                                   # Authorized server ID
+DISCORD_TOKEN=                                # Discord bot token
+CLIENT_ID=                                    # Bot application client ID
+GUILD_ID=                                     # Authorized server ID
 
 # ─── Access Control ───
-KINTARO_BOT_PUBLIC=false                    # Allow bot on any server (true/false)
-KINTARO_BOT_QUIT_UNVERIFIED_ALL_SERVERS=true # Leave unauthorized servers on startup
+KINTARO_BOT_PUBLIC=false                      # Allow bot to join any server
+KINTARO_BOT_QUIT_UNVERIFIED_ALL_SERVERS=true  # Leave unauthorized servers at startup
 
 # ─── Entry/Exit Messages ───
-KINTARO_ENTRY_EXIT=true                     # Enable simple join/leave messages
-KINTARO_ENTRY_EXIT_WELCOME_CHANNEL=         # Channel ID for join/leave messages
+KINTARO_ENTRY_EXIT=true                       # Enable simple join/leave messages
+KINTARO_ENTRY_EXIT_WELCOME_CHANNEL=           # Channel ID for join/leave messages
 
 # ─── Guard System ───
-KINTARO_ENTRY_EXIT_GUARD=true               # Enable the verification guard system
-KINTARO_ENTRY_EXIT_GUARD_WELCOME_CHANNEL=   # Channel ID for guard welcome messages
-KINTARO_ENTRY_EXIT_GUARD_UNVERIFIED_ROLE=   # Role ID assigned to unverified members
-KINTARO_ENTRY_EXIT_GUARD_VERIFIED_ROLE=     # Role ID assigned after admin verification
+KINTARO_ENTRY_EXIT_GUARD=true                 # Enable verification guard system
+KINTARO_ENTRY_EXIT_GUARD_WELCOME_CHANNEL=     # Channel ID for guard welcome messages
+KINTARO_ENTRY_EXIT_GUARD_UNVERIFIED_ROLE=     # Role ID assigned to unverified members
+KINTARO_ENTRY_EXIT_GUARD_VERIFIED_ROLE=       # Role ID assigned after verification
 
 # ─── Auto Voice Join ───
-KINTARO_JUMP_VOICE_AUTO=true                # Enable automatic voice channel joining
-KINTARO_JUMP_VOICE_AUTO_JOIN_INTERVAL=300   # Check interval in seconds (default: 300)
-KINTARO_JUMP_VOICE_AUTO_CHANNEL_ID=         # Target voice channel ID
+KINTARO_JUMP_VOICE_AUTO=true                  # Enable automatic voice channel join
+KINTARO_JUMP_VOICE_AUTO_JOIN_INTERVAL=300     # Check interval (in seconds) (default: 300)
+KINTARO_JUMP_VOICE_AUTO_CHANNEL_ID=           # Target voice channel ID
 
 # ─── Auto Responder ───
-KINTARO_AUTO_RESPONSER=true                 # Enable automatic message responses
+KINTARO_AUTO_RESPONSER=true                   # Enable automatic message responses
 ```
 
----
+## 🚀 Installation <a id="installation"></a>
 
-## 🚀 Getting Started <a id="getting-started"></a>
+### Requirements <a id="gereksinimler"></a>
 
-### Prerequisites <a id="prerequisites"></a>
+- **Node.js**: v18 or higher
+- **npm**: Comes with Node.js
 
-- **Node.js** v18 or higher
-- **npm** (included with Node.js)
-- A Discord account and at least one [Discord Application](https://discord.com/developers/applications) with a bot token
-- The bot must be invited to your server with the following permissions:
-  - `Send Messages`
-  - `Manage Messages`
-  - `Manage Roles`
-  - `View Channels`
-  - `Connect` & `Speak` (for voice features)
-  - `Read Message History`
-  - `Use Slash Commands`
-
-### Installation <a id="installation"></a>
+### Step-by-Step Installation
 
 1. **Clone the repository:**
 
 ```bash
-git clone https://github.com/your-username/kintaro-discord-bots.git
+git clone https://github.com/xkintaro/kintaro-discord-bots.git
 cd kintaro-discord-bots
 ```
 
-2. **Install dependencies for all bots at once:**
+2. **Install all bot dependencies at once:**
 
 ```bash
-# Using the script
 node install-requirements.js
-
-# Or on Windows
-install-requirements.bat
 ```
 
-This will run `npm install` in every bot folder under `all/`.
+This command will run `npm install` in each bot folder under `all/`.
 
-### Configuration <a id="configuration"></a>
+3. **Configure environment variables:**
 
-1. Navigate to each bot's folder under `all/`
-2. Edit the `.env` file and fill in your bot's credentials:
+Configure the `.env` file in the root directory of each bot. Enable/disable features as desired.
 
 ```env
-DISCORD_TOKEN=your_bot_token_here
-CLIENT_ID=your_client_id_here
-GUILD_ID=your_server_id_here
+DISCORD_TOKEN=
+CLIENT_ID=
+GUILD_ID=
 ```
 
-3. For the **Kintaro** bot, additionally configure the feature-specific variables (channels, roles, etc.)
+4. **Deploy Slash Commands:**
 
-### Deploying Commands <a id="deploying-commands"></a>
-
-Before using slash commands, you need to register them with Discord:
+Before using slash commands, you must register them with Discord:
 
 ```bash
-# Deploy commands for all bots
 node deploy.js
-
-# Or on Windows
-deploy.bat
 ```
 
-This runs `node deploy.js` inside each bot folder, registering all slash commands as **guild-specific commands** for faster propagation.
+This will run `node deploy.js` inside each bot directory to register all slash commands.
 
-### Running the Bots <a id="running-the-bots"></a>
+5. **Run the Bots:**
 
 ```bash
-# Start all bots simultaneously
 node run.js
-
-# Or on Windows
-run.bat
 ```
 
-Each bot runs as a separate child process. Console output is prefixed with the bot folder name for easy identification.
+Each bot will run as a separate child process.
 
----
-
-## 📜 Project Scripts <a id="project-scripts"></a>
-
-| Script | Command | Description |
-|--------|---------|-------------|
-| **install-requirements** | `node install-requirements.js` | Runs `npm install` in every bot folder |
-| **deploy** | `node deploy.js` | Deploys slash commands for all bots to their respective guilds |
-| **run** | `node run.js` | Starts all bots simultaneously as child processes |
-| **clear** | `node clear.js` | Removes all registered slash commands for all bots |
-
-Each script also has a `.bat` equivalent for easy execution on Windows via double-click.
-
-> **Note:** Each bot also has its own `deploy.js` and `clear.js` that can be run individually for granular control.
-
----
-
-## 🛠️ Tech Stack <a id="tech-stack"></a>
-
-| Technology | Purpose |
-|------------|---------|
-| [discord.js v14](https://discord.js.org/) | Core Discord API wrapper |
-| [@discordjs/voice](https://www.npmjs.com/package/@discordjs/voice) | Voice channel management |
-| [canvas](https://www.npmjs.com/package/canvas) | Dynamic image generation (ship command) |
-| [sharp](https://www.npmjs.com/package/sharp) | Image processing & format conversion |
-| [axios](https://www.npmjs.com/package/axios) | HTTP requests for avatar fetching |
-| [dotenv](https://www.npmjs.com/package/dotenv) | Environment variable management |
-| [ffmpeg-static](https://www.npmjs.com/package/ffmpeg-static) | FFmpeg binary for audio/voice support |
-
----
 
 ## 📂 Project Structure <a id="project-structure"></a>
 
@@ -628,8 +547,12 @@ kintaro-discord-bots/
 └── README.md
 ```
 
----
+## 📄 License <a id="license"></a>
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+#
 
 <p align="center">
-  ❤️ Developed By Kintaro</a>
+  <sub>❤️ Developed by "Mustafa TAŞAL" (kintaro)</sub>
 </p>
